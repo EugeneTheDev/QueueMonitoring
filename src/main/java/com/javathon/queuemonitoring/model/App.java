@@ -58,11 +58,11 @@ public class App {
     /**
      * Update queue information for some place
      * @param id place id
-     * @param count new count of peoples in queue
+     * @param userSize new userSize of peoples in queue
      * @return success response
      */
-    public SuccessResponse updateInformation(long id, int count){
-        db.updateInformation(id, count);
+    public SuccessResponse updateInformation(long id, int userSize){
+        db.updateInformation(id, userSize);
         return new SuccessResponse();
     }
 
@@ -79,4 +79,5 @@ public class App {
                 location.getDouble("lon"));
         return new TimeResponse(time);
     }
+
 }
