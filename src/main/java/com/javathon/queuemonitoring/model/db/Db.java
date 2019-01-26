@@ -35,7 +35,7 @@ public class Db {
     /**
      * @see com.javathon.queuemonitoring.model.App#updateInformation(long, int)
      */
-    public void updateInformation(long id, int userSize){
+    public int updateInformation(long id, int userSize){
         Document doc = places.find(eq("id", id)).first();
 
         int currentSize = doc.getInteger("queueSize");
@@ -56,16 +56,28 @@ public class Db {
 
         );
 
+        return newSize;
+    }
+
+    /**
+     * Increment queue size
+     * @param id place id
+     */
+    public void updateUserCome(long id){
+        places.updateOne(
+                eq("id", id),
+                inc("queueSize", 1)
+        );
     }
 
 
     /**
-     * Location for some place
+     * Place json object
      * @param id place id
      * @return json object with "lat" and "lon" fields
      */
-    public Document getLocation(long id){
-        return places.find(eq("id", id)).first().get("location", Document.class);
+    public Document getPlace(long id){
+        return places.find(eq("id", id)).first();
     }
 
 
