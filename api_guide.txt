@@ -91,12 +91,15 @@ sample result:
 /get/details?id=(long)&lat=(double)&lon=(double)
 sample result:
 {
-    "time": "13 мин.",
+    "time": "2 ч. 37 мин.",
+    "peopleInQueue": 13,
     "success": true
 }
 
 /update/information?id=(long)&user_size=(int)
+sample result:
 {
+    "newSize": 5,
     "success": true
 }
 
