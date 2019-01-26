@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public class DistanceUtils {
 
-    private static String TOKEN = null;
+    private static volatile String TOKEN = null;
 
     /**
      * Calculates a straight line distance
@@ -55,18 +55,24 @@ public class DistanceUtils {
         }
     }
 
-    private static synchronized String getToken() {
-        if (TOKEN == null) {
-            Properties dbCredentials = new Properties();
+    private static String getToken() {
+        String LOCAL_TOKEN = TOKEN;
+        if (LOCAL_TOKEN == null) {
+            synchronized (TOKEN) {
+                LOCAL_TOKEN = TOKEN;
+                if (LOCAL_TOKEN == null) {
+                    Properties dbCredentials = new Properties();
+                    try {
+                        dbCredentials.load(App.class.getClassLoader().getResourceAsStream("config.properties"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
-            try {
-                dbCredentials.load(App.class.getClassLoader().getResourceAsStream("config.properties"));
-            } catch (IOException e) {
-                e.printStackTrace();
+                    TOKEN = LOCAL_TOKEN = dbCredentials.getProperty("distance-token");
+                }
             }
-
-            TOKEN = dbCredentials.getProperty("distance-token");
         }
-        return TOKEN;
+
+        return LOCAL_TOKEN;
     }
 }

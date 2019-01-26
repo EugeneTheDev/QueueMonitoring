@@ -1,6 +1,15 @@
 $("document").ready(function(){
     var lastPosition = 0;
     
+    $(".hidden-block").hide();
+    $(".card").on("click", function(e){
+        let present_id = e.currentTarget.id;
+        $("#"+present_id+" .hidden-block").toggle();
+        console.log($("#"+present_id+".hidden-block"));
+
+        // $(".hidden-block").fadeIn();
+    });
+
     $(window).scroll((e)=>{
         var newPosition = $(this).scrollTop(); 
         if (newPosition-lastPosition>0){
