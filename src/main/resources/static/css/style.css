@@ -30,6 +30,12 @@ hr.custom {
   margin-left: 10px;
 }
 
+.icon:first-child { 
+  margin-left: 0px;
+}
+
+
+
 .btn-group {
   margin: 12px 16px;
 }
@@ -37,7 +43,7 @@ hr.custom {
 .btn-group button {
   border: 1px solid green; 
   color: white; 
-  padding: 12px 0px; 
+  padding: 12px 16px; 
   cursor: pointer; 
   float: left; 
   text-align: center;
@@ -74,6 +80,6 @@ button.right {
 
 .icon-block {
   font-size: 18px;
-  margin-top: 5px;
+  padding: 10px 0px;
 }
 
