@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("api")
 public class ApiController {
 
     private App app;
@@ -27,15 +27,13 @@ public class ApiController {
         return app.getAllPlaces();
     }
 
-    @GetMapping("/update")
+    @GetMapping("update_information")
     public SuccessResponse updateInformation(@RequestParam(value = "id") long id,
-                                             @RequestParam(value = "count") int count){
-        return app.updateInformation(id, count);
+                                             @RequestParam(value = "user_size") int userSize){
+        return app.updateInformation(id, userSize);
     }
 
-
-
-    @GetMapping("/get_details")
+    @GetMapping("get_details")
     public TimeResponse getDetails(@RequestParam(value = "id") int id,
                                    @RequestParam(value = "lat") double lat,
                                    @RequestParam(value = "lon") double lon){

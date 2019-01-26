@@ -6,6 +6,7 @@ import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,17 +35,29 @@ public class Db {
     /**
      * @see com.javathon.queuemonitoring.model.App#updateInformation(long, int)
      */
-    public void updateInformation(long id, int count){
-        int currentCount = places.find(eq("id", id))
-                .first()
-                .getInteger("queue");
+    public void updateInformation(long id, int userSize){
+        Document doc = places.find(eq("id", id)).first();
+
+        int currentSize = doc.getInteger("queueSize");
+        int newSize = (int)(currentSize*0.7 + userSize*0.3) + 1;
+        double currentSpeed = doc.getDouble("speed");
+        long lastUpdated = doc.getLong("lastUpdated");
+        long time = Calendar.getInstance().getTimeInMillis();
+
+        double newSpeed = 0.5*currentSpeed + 0.5*60*1000*(userSize - currentSize)/(time - lastUpdated);
+
 
         places.updateOne(
                 eq("id", id),
-                set("queue", (int)(currentCount*0.7 + count*0.3))
+                combine(
+                        set("queueSize", newSize),
+                        set("speed", newSpeed)
+                )
+
         );
 
     }
+
 
     /**
      * Location for some place
