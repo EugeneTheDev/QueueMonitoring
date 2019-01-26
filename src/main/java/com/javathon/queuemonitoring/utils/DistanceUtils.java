@@ -1,9 +1,15 @@
 package com.javathon.queuemonitoring.utils;
 
+import com.javathon.queuemonitoring.model.App;
 import com.javathon.queuemonitoring.model.google_response.DistanceResponse;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
+import java.util.Properties;
+
 public class DistanceUtils {
+
+    private static String TOKEN = null;
 
     /**
      * Calculates a straight line distance
@@ -27,9 +33,9 @@ public class DistanceUtils {
 
     /**
      * Gets from google directions API
-     * @return time in minutes or -1 if something went wrong
+     * @return time or null if something went wrong
      */
-    public static int calculateTimetoGo(double lat1, double lon1, double lat2, double lon2) {
+    public static String calculateTimeToGo(double lat1, double lon1, double lat2, double lon2) {
         RestTemplate template = new RestTemplate();
         String query = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" +
                 lat1 +
@@ -39,12 +45,28 @@ public class DistanceUtils {
                 lat2 +
                 "," +
                 lon2 +
-                "&mode=walking&key=AIzaSyC8gfc-QlpYkIEpncSUnKGdh5iqCqrpGYQ";
+                "&language=ru&mode=walking&key=" +
+                getToken();
         DistanceResponse response = template.getForObject(query, DistanceResponse.class);
         if (response != null) {
-            return response.rows.get(0).elements.get(0).duration.value / 60;
+            return response.rows.get(0).elements.get(0).duration.text;
         } else {
-            return -1;
+            return null;
         }
+    }
+
+    private static synchronized String getToken() {
+        if (TOKEN == null) {
+            Properties dbCredentials = new Properties();
+
+            try {
+                dbCredentials.load(App.class.getClassLoader().getResourceAsStream("config.properties"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            TOKEN = dbCredentials.getProperty("distance-token");
+        }
+        return TOKEN;
     }
 }
