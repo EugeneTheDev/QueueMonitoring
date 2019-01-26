@@ -33,9 +33,9 @@ public class DistanceUtils {
 
     /**
      * Gets from google directions API
-     * @return time or null if something went wrong
+     * @return Pair(Time to go as string, time in minutes)
      */
-    public static String calculateTimeToGo(double lat1, double lon1, double lat2, double lon2) {
+    public static Pair<String, Integer> calculateTimeToGo(double lat1, double lon1, double lat2, double lon2) {
         RestTemplate template = new RestTemplate();
         String query = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" +
                 lat1 +
@@ -49,7 +49,7 @@ public class DistanceUtils {
                 getToken();
         DistanceResponse response = template.getForObject(query, DistanceResponse.class);
         if (response != null) {
-            return response.rows.get(0).elements.get(0).duration.text;
+            return new Pair(response.rows.get(0).elements.get(0).duration.text, response.rows.get(0).elements.get(0).duration.value);
         } else {
             return null;
         }
@@ -58,7 +58,7 @@ public class DistanceUtils {
     private static String getToken() {
         String LOCAL_TOKEN = TOKEN;
         if (LOCAL_TOKEN == null) {
-            synchronized (TOKEN) {
+            synchronized (DistanceUtils.class) {
                 LOCAL_TOKEN = TOKEN;
                 if (LOCAL_TOKEN == null) {
                     Properties dbCredentials = new Properties();
