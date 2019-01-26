@@ -4,10 +4,8 @@ $("document").ready(function(){
     $(window).scroll((e)=>{
         var newPosition = $(this).scrollTop(); 
         if (newPosition-lastPosition>0){
-            console.log(newPosition-lastPosition);
             $("header:first").css({position: "absolute"});
         }else{
-            console.log(newPosition-lastPosition);
             $("header:first").css({position: "fixed"});
         }
         lastPosition = newPosition;
