@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SberCalculatorApplication {
+public class QueueMonitoringApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SberCalculatorApplication.class, args);
+        SpringApplication.run(QueueMonitoringApplication.class, args);
     }
 
 }
