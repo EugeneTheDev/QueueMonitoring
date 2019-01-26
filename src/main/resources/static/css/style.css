@@ -9,7 +9,8 @@
   border-radius: 1%;
   background-color: white;
   padding: 18px;
-  margin: 9px;
+  margin: 20px 9px 9px 9px;
+  
 }
 
 .card:hover {

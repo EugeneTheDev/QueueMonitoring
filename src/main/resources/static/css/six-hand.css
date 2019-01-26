@@ -43,11 +43,11 @@ header .header-text{
 }
 
 .opening-tags-block{
-    width: 100%;
     border:2px solid rgba(41, 41, 41, 0.7);
     border-radius: 5px;
     background: none;
     box-shadow: 2px 2px 2px rgba(0,0,0,0.6);
+    margin: 9px;
 }
 
 .opening-tags-block__text{
@@ -55,6 +55,7 @@ header .header-text{
     font-family: "Montserrat", sans-serif;
     font-size: 20px;
     font-weight: 400;
+    text-align: center;
 
 }
 
