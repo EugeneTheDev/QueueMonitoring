@@ -1,25 +1,31 @@
-$("document").ready(function(){
+$("document").ready(function () {
     var lastPosition = 0;
-    
+
     $(".hidden-block").hide();
-    $(".card").on("click", function(e){
+    $(".card").on("click", function (e) {
         let present_id = e.currentTarget.id;
-        $("#"+present_id+" .hidden-block").toggle();
-        console.log($("#"+present_id+".hidden-block"));
+        $("#" + present_id + " .hidden-block").fadeToggle();
+        console.log($("#" + present_id + ".hidden-block"));
 
         // $(".hidden-block").fadeIn();
     });
 
-    $(window).scroll((e)=>{
-        var newPosition = $(this).scrollTop(); 
-        if (newPosition-lastPosition>0){
-            $("header:first").css({position: "absolute"});
-        }else{
-            $("header:first").css({position: "fixed"});
+    $(window).scroll((e) => {
+        var newPosition = $(this).scrollTop();
+        if (newPosition - lastPosition > 0) {
+            $("header:first").css({
+                position: "absolute"
+            });
+        } else {
+            $("header:first").css({
+                position: "fixed"
+            });
         }
         lastPosition = newPosition;
     })
 });
+
+
 
 // $("document").ready(function(){
 //     $(".notification").hide();
@@ -37,8 +43,8 @@ $("document").ready(function(){
 //         $(".relation-block").append(x);
 //         $(x).hide().fadeIn({duration:500});
 //     }
-    
-    
+
+
 //     function searchValidator(){
 //         if (/http\w*:\/\/vk.com\/\w+/.test($("input")[4].value)){
 //             $(".notification").fadeOut({duration:500});
@@ -59,7 +65,7 @@ $("document").ready(function(){
 //                                 for (var i=0; i<data.result.length;i++){
 //                                     relationInserter(arrayOfRelations[i]);
 //                                 }
-                                
+
 //                             }else{
 //                                 $(".notification-search-error").fadeIn({duration:1000});
 //                                 $("#search-error").text(data.message);
@@ -77,8 +83,8 @@ $("document").ready(function(){
 //         }
 //     $("input")[4].value = "";
 // }
-    
-    
+
+
 //     function requestValidator(){
 //         if (window.innerWidth<=720){
 //             if (/http\w*:\/\/vk.com\/\w+/.test($(".first-input")[1].value) && /http\w*:\/\/vk.com\/\w+/.test($(".second-input")[1].value)){
@@ -93,7 +99,7 @@ $("document").ready(function(){
 //                         target: $(".second-input")[1].value.slice(15)
 //                     },
 //                     success: function(data){
-                        
+
 //                         $(".notification-server-error").fadeOut({duration:1000});
 
 //                         if (data.success){
@@ -107,7 +113,7 @@ $("document").ready(function(){
 //                             $(".notification-server-error").fadeIn({duration:1000});
 //                             $("#server-error-mobile").text(data.message);
 //                         }
-                        
+
 //                         $(".first-input")[1].value = "";
 //                         $(".second-input")[1].value = "";
 //                         }
@@ -135,7 +141,7 @@ $("document").ready(function(){
 //                     target: $(".second-input")[0].value.slice(15)
 //                 },
 //                 success: function(data){
-                        
+
 //                         $(".notification-server-error").fadeOut({duration:1000});
 
 //                         if (data.success){
@@ -149,7 +155,7 @@ $("document").ready(function(){
 //                             $(".notification-server-error").fadeIn({duration:1000});
 //                             $("#server-error").text(data.message);
 //                         }
-                        
+
 //                         $(".first-input")[0].value = "";
 //                         $(".second-input")[0].value = "";
 //                     }
@@ -166,8 +172,8 @@ $("document").ready(function(){
 //             }
 //         }
 //     }
-    
-    
+
+
 //     function updateRightNowInformation(){
 //         $.ajax({
 //                 url: "api/update",
@@ -187,12 +193,12 @@ $("document").ready(function(){
 
 //             });
 //     }
-    
+
 //     $("#search-button").on("click", searchValidator);
 //     $("#digest-button").on("click", requestValidator);
 //     $("#digest-button-mobile").on("click", requestValidator);
 //     updateRightNowInformation();
 //     setInterval(updateRightNowInformation, 10000);
 
-        
+
 // });
