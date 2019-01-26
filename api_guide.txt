@@ -7,8 +7,8 @@ sample result:
             "name": "Кофе Хауз",
             "lastUpdated": 1548535367223,
             "address": "Москва, Кутузовский просп., 30/32",
-            "queueSize": 3,
-            "speed": 0.08770442439586269,
+            "queueSize": 5,
+            "speed": -0.025301227630511687,
             "location": {
                 "lat": 55.741073,
                 "lon": 37.535948
@@ -18,7 +18,9 @@ sample result:
             "id": 1,
             "name": "Cafetera",
             "address": "Москва, ул. Кульнева, 4",
-            "queue": 0,
+            "speed": 0,
+            "queueSize": 0,
+            "lastUpdated": 1548535367223,
             "location": {
                 "lat": 55.74115,
                 "lon": 37.53113
@@ -28,7 +30,9 @@ sample result:
             "id": 2,
             "name": "Skuratov coffee roasters",
             "address": "Москва, Кутузовский просп., 36 строение 39",
-            "queue": 0,
+            "speed": 0,
+            "queueSize": 0,
+            "lastUpdated": 1548535367223,
             "location": {
                 "lat": 55.739551,
                 "lon": 37.527555
@@ -38,7 +42,9 @@ sample result:
             "id": 3,
             "name": "Дижестив",
             "address": "Москва, Кутузовский просп., 33",
-            "queue": 0,
+            "speed": 0,
+            "queueSize": 0,
+            "lastUpdated": 1548535367223,
             "location": {
                 "lat": 55.741442,
                 "lon": 37.540623
@@ -48,7 +54,9 @@ sample result:
             "id": 4,
             "name": "Verde",
             "address": "Москва, Кутузовский просп., 36, строение 4, подъезд 3",
-            "queue": 0,
+            "speed": 0,
+            "queueSize": 0,
+            "lastUpdated": 1548535367223,
             "location": {
                 "lat": 55.741212,
                 "lon": 37.527094
@@ -58,7 +66,9 @@ sample result:
             "id": 5,
             "name": "Кафе Rodina",
             "address": "Москва, Кутузовский просп., 36, строение 17",
-            "queue": 0,
+            "speed": 0,
+            "queueSize": 0,
+            "lastUpdated": 1548535367223,
             "location": {
                 "lat": 55.741257,
                 "lon": 37.524251
@@ -68,7 +78,9 @@ sample result:
             "id": 6,
             "name": "Кофе & Молоко",
             "address": "Москва,  ул. 1812 года, 2",
-            "queue": 0,
+            "speed": 0,
+            "queueSize": 0,
+            "lastUpdated": 1548535367223,
             "location": {
                 "lat": 55.736636,
                 "lon": 37.524439
@@ -78,10 +90,36 @@ sample result:
             "id": 7,
             "name": "Шоколадница",
             "address": "Москва, Генерала Ермолова ул., 4",
-            "queue": 0,
+            "speed": 0,
+            "queueSize": 0,
+            "lastUpdated": 1548535367223,
             "location": {
                 "lat": 55.735078,
                 "lon": 37.517959
+            }
+        },
+        {
+            "id": 8,
+            "name": "Пион",
+            "address": "Москва,  Кутузовский просп., 21",
+            "speed": 0,
+            "queueSize": 0,
+            "lastUpdated": 1548535367223,
+            "location": {
+                "lat": 55.744977,
+                "lon": 37.549746
+            }
+        },
+        {
+            "id": 9,
+            "name": "кафе United Asia",
+            "address": "Москва, Пресненская наб., 8 стр.1",
+            "speed": 0,
+            "queueSize": 0,
+            "lastUpdated": 1548535367223,
+            "location": {
+                "lat": 55.747163,
+                "lon": 37.539682
             }
         }
     ],
