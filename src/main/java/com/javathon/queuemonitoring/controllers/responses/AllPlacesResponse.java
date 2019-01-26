@@ -4,12 +4,11 @@ import org.bson.Document;
 
 import java.util.List;
 
-public class AllPlacesResponse extends BaseResponse {
+public class AllPlacesResponse extends SuccessResponse {
 
     private List<Document> places;
 
     public AllPlacesResponse(List<Document> places) {
-        super(true);
         this.places = places;
     }
 

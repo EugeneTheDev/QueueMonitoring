@@ -1,9 +1,9 @@
 package com.javathon.queuemonitoring.model;
 
+import com.javathon.queuemonitoring.controllers.responses.SuccessResponse;
 import com.javathon.queuemonitoring.controllers.responses.TimeResponse;
 import com.javathon.queuemonitoring.model.db.Db;
 import com.javathon.queuemonitoring.controllers.responses.AllPlacesResponse;
-import com.javathon.queuemonitoring.controllers.responses.UpdateResponse;
 import com.javathon.queuemonitoring.utils.DistanceUtils;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -61,9 +61,9 @@ public class App {
      * @param count new count of peoples in queue
      * @return success response
      */
-    public UpdateResponse updateInformation(long id, int count){
+    public SuccessResponse updateInformation(long id, int count){
         db.updateInformation(id, count);
-        return new UpdateResponse();
+        return new SuccessResponse();
     }
 
     /**
