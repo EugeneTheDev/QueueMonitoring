@@ -1,15 +1,21 @@
 package com.javathon.queuemonitoring.model;
 
+import com.javathon.queuemonitoring.controllers.responses.TimeResponse;
 import com.javathon.queuemonitoring.model.db.Db;
 import com.javathon.queuemonitoring.controllers.responses.AllPlacesResponse;
 import com.javathon.queuemonitoring.controllers.responses.UpdateResponse;
+import com.javathon.queuemonitoring.utils.DistanceUtils;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import org.bson.Document;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * Main class
+ */
 @Component
 public class App {
 
@@ -19,6 +25,9 @@ public class App {
         initDb();
     }
 
+    /**
+     * Initial events
+     */
     private void initDb(){
         Properties dbCredentials = new Properties();
 
@@ -39,12 +48,35 @@ public class App {
 
     }
 
+    /**
+     * @return all places from db
+     */
     public AllPlacesResponse getAllPlaces(){
         return new AllPlacesResponse(db.getAllPlaces());
     }
 
+    /**
+     * Update queue information for some place
+     * @param id place id
+     * @param count new count of peoples in queue
+     * @return success response
+     */
     public UpdateResponse updateInformation(long id, int count){
         db.updateInformation(id, count);
         return new UpdateResponse();
+    }
+
+    /**
+     * Calculate time to go for some place
+     * @param id place id
+     * @param lat user latitude
+     * @param lon user longitude
+     * @return time to go
+     */
+    public TimeResponse calculateTime(long id, double lat, double lon){
+        Document location = db.getLocation(id);
+        String time = DistanceUtils.calculateTimeToGo(lat, lon, location.getDouble("lat"),
+                location.getDouble("lon"));
+        return new TimeResponse(time);
     }
 }
