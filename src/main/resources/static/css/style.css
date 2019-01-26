@@ -63,7 +63,7 @@ hr.custom {
 }
 
 .btn-group button.left:hover {
-  background-color: #3e8e41;
+  background-color:   #00546f;
 }
 
 .btn-group button.border-right:hover {
@@ -71,7 +71,7 @@ hr.custom {
 }
 
 button.left {
-    background-color: #4CAF50; 
+    background-color: #008db9; 
 }
 
 button.right {
