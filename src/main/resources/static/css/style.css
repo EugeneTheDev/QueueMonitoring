@@ -71,25 +71,6 @@ hr.custom {
   display: table;
 }
 
-<<<<<<< HEAD
-.btn-group button.left:hover {
-  background-color:   #00546f;
-}
-
-.btn-group button.border-right:hover {
-  background-color: #3e8e41;
-}
-
-button.left {
-    background-color: #008db9; 
-}
-
-button.right {
-    background-color: red; 
-}
-=======
-
->>>>>>> 750b6864372fc1725383609da2f37db75e6b384a
 
 .icon-block {
   font-size: 25px;
@@ -105,3 +86,9 @@ button.right {
     font-size: 15px; 
   }
 } 
+
+@media (max-width: 480px) {
+  .headline {
+    font-size: 28px;
+  }
+}
