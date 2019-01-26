@@ -2,6 +2,7 @@ package com.javathon.queuemonitoring.controllers;
 
 import com.javathon.queuemonitoring.controllers.responses.SuccessResponse;
 import com.javathon.queuemonitoring.controllers.responses.TimeResponse;
+import com.javathon.queuemonitoring.controllers.responses.UpdateResponse;
 import com.javathon.queuemonitoring.model.App;
 import com.javathon.queuemonitoring.controllers.responses.AllPlacesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,8 @@ public class ApiController {
     }
 
     @GetMapping("update/information")
-    public SuccessResponse updateInformation(@RequestParam(value = "id") long id,
-                                             @RequestParam(value = "user_size") int userSize){
+    public UpdateResponse updateInformation(@RequestParam(value = "id") long id,
+                                            @RequestParam(value = "user_size") int userSize){
         return app.updateInformation(id, userSize);
     }
 
