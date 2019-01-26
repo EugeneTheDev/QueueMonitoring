@@ -4,7 +4,7 @@ public class DistanceUtils {
 
     /**
      * Calculates a straight line distance
-     * @return distance between first and second points
+     * @return distance between first and second points in meters
      */
     public static double calculateStraightDistance(double lat1, double lon1, double lat2, double lon2) {
         final int R = 6371; // Radius of the earth
@@ -20,5 +20,13 @@ public class DistanceUtils {
         distance = Math.pow(distance, 2);
 
         return Math.sqrt(distance);
+    }
+
+    /**
+     * Gets from google directions API
+     * @return time in minutes
+     */
+    public static int calculateTimetoGo() {
+        return 0;
     }
 }
