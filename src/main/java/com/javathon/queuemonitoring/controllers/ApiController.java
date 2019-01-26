@@ -1,13 +1,14 @@
 package com.javathon.queuemonitoring.controllers;
 
+import com.javathon.queuemonitoring.controllers.responses.UpdateResponse;
 import com.javathon.queuemonitoring.model.App;
-import org.bson.Document;
+import com.javathon.queuemonitoring.controllers.responses.AllPlacesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -21,8 +22,16 @@ public class ApiController {
     }
 
     @GetMapping("get_all")
-    public List<Document> getAllPlaces(){
+    public AllPlacesResponse getAllPlaces(){
         return app.getAllPlaces();
     }
+
+    @GetMapping("/update")
+    public UpdateResponse updateInformation(@RequestParam(value = "id") long id,
+                                            @RequestParam(value = "count") int count){
+        return app.updateInformation(id, count);
+    }
+
+
 
 }
