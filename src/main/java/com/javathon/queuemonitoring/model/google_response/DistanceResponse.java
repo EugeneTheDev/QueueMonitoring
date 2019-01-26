@@ -6,16 +6,16 @@ public class DistanceResponse {
 
     public List<Row> rows;
 
-    public class Row {
+    public static class Row {
 
         public List<Element> elements;
 
-        public class Element {
+        public static class Element {
 
             public Field distance;
             public Field duration;
 
-            public class Field {
+            public static class Field {
 
                 public String text;
                 public int value;
