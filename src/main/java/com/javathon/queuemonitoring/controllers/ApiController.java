@@ -5,15 +5,11 @@ import com.javathon.queuemonitoring.controllers.responses.TimeResponse;
 import com.javathon.queuemonitoring.controllers.responses.UpdateResponse;
 import com.javathon.queuemonitoring.model.App;
 import com.javathon.queuemonitoring.controllers.responses.AllPlacesResponse;
-import com.javathon.queuemonitoring.model.google_response.PlacesResponse;
-import com.javathon.queuemonitoring.utils.PlacesUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 
 @RestController
