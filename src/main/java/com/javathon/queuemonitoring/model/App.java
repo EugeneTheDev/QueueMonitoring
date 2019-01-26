@@ -1,13 +1,13 @@
 package com.javathon.queuemonitoring.model;
 
 import com.javathon.queuemonitoring.model.db.Db;
+import com.javathon.queuemonitoring.controllers.responses.AllPlacesResponse;
+import com.javathon.queuemonitoring.controllers.responses.UpdateResponse;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
-import org.bson.Document;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Properties;
 
 @Component
@@ -39,7 +39,12 @@ public class App {
 
     }
 
-    public List<Document> getAllPlaces(){
-        return db.getAllPlaces();
+    public AllPlacesResponse getAllPlaces(){
+        return new AllPlacesResponse(db.getAllPlaces());
+    }
+
+    public UpdateResponse updateInformation(long id, int count){
+        db.updateInformation(id, count);
+        return new UpdateResponse();
     }
 }

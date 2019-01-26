@@ -1,5 +1,8 @@
 package com.javathon.queuemonitoring.utils;
 
+import com.javathon.queuemonitoring.model.google_response.DistanceResponse;
+import org.springframework.web.client.RestTemplate;
+
 public class DistanceUtils {
 
     /**
@@ -24,9 +27,24 @@ public class DistanceUtils {
 
     /**
      * Gets from google directions API
-     * @return time in minutes
+     * @return time in minutes or -1 if something went wrong
      */
-    public static int calculateTimetoGo() {
-        return 0;
+    public static int calculateTimetoGo(double lat1, double lon1, double lat2, double lon2) {
+        RestTemplate template = new RestTemplate();
+        String query = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" +
+                lat1 +
+                "," +
+                lon1 +
+                "&destinations=" +
+                lat2 +
+                "," +
+                lon2 +
+                "&mode=walking&key=AIzaSyC8gfc-QlpYkIEpncSUnKGdh5iqCqrpGYQ";
+        DistanceResponse response = template.getForObject(query, DistanceResponse.class);
+        if (response != null) {
+            return response.rows.get(0).elements.get(0).duration.value / 60;
+        } else {
+            return -1;
+        }
     }
 }
