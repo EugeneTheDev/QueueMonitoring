@@ -1,0 +1,110 @@
+/get/all
+sample result:
+{
+    "places": [
+        {
+            "id": 0,
+            "name": "Кофе Хауз",
+            "lastUpdated": 1548535367223,
+            "address": "Москва, Кутузовский просп., 30/32",
+            "queueSize": 3,
+            "speed": 0.08770442439586269,
+            "location": {
+                "lat": 55.741073,
+                "lon": 37.535948
+            }
+        },
+        {
+            "id": 1,
+            "name": "Cafetera",
+            "address": "Москва, ул. Кульнева, 4",
+            "queue": 0,
+            "location": {
+                "lat": 55.74115,
+                "lon": 37.53113
+            }
+        },
+        {
+            "id": 2,
+            "name": "Skuratov coffee roasters",
+            "address": "Москва, Кутузовский просп., 36 строение 39",
+            "queue": 0,
+            "location": {
+                "lat": 55.739551,
+                "lon": 37.527555
+            }
+        },
+        {
+            "id": 3,
+            "name": "Дижестив",
+            "address": "Москва, Кутузовский просп., 33",
+            "queue": 0,
+            "location": {
+                "lat": 55.741442,
+                "lon": 37.540623
+            }
+        },
+        {
+            "id": 4,
+            "name": "Verde",
+            "address": "Москва, Кутузовский просп., 36, строение 4, подъезд 3",
+            "queue": 0,
+            "location": {
+                "lat": 55.741212,
+                "lon": 37.527094
+            }
+        },
+        {
+            "id": 5,
+            "name": "Кафе Rodina",
+            "address": "Москва, Кутузовский просп., 36, строение 17",
+            "queue": 0,
+            "location": {
+                "lat": 55.741257,
+                "lon": 37.524251
+            }
+        },
+        {
+            "id": 6,
+            "name": "Кофе & Молоко",
+            "address": "Москва,  ул. 1812 года, 2",
+            "queue": 0,
+            "location": {
+                "lat": 55.736636,
+                "lon": 37.524439
+            }
+        },
+        {
+            "id": 7,
+            "name": "Шоколадница",
+            "address": "Москва, Генерала Ермолова ул., 4",
+            "queue": 0,
+            "location": {
+                "lat": 55.735078,
+                "lon": 37.517959
+            }
+        }
+    ],
+    "success": true
+}
+
+/get/details?id=(long)&lat=(double)&lon=(double)
+sample result:
+{
+    "time": "13 мин.",
+    "success": true
+}
+
+/update/information?id=(long)&user_size=(int)
+{
+    "success": true
+}
+
+/update/user/come?id=(long)
+sample result:
+{
+    "success": true
+}
+
+
+
