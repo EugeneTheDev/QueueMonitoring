@@ -1,11 +1,10 @@
 package com.javathon.queuemonitoring.controllers.responses;
 
-public class TimeResponse extends BaseResponse {
+public class TimeResponse extends SuccessResponse {
 
     private String time;
 
     public TimeResponse(String time) {
-        super(true);
         this.time = time;
     }
 
