@@ -76,8 +76,13 @@ public class App {
     public TimeResponse calculateTime(long id, double lat, double lon){
         Document location = db.getLocation(id);
         String time = DistanceUtils.calculateTimeToGo(lat, lon, location.getDouble("lat"),
-                location.getDouble("lon"));
+                location.getDouble("lon")).getFirst();
         return new TimeResponse(time);
+    }
+
+    public SuccessResponse updateUserCome(long id){
+        db.updateUserCome(id);
+        return new SuccessResponse();
     }
 
 }

@@ -58,6 +58,17 @@ public class Db {
 
     }
 
+    /**
+     * Increment queue size
+     * @param id place id
+     */
+    public void updateUserCome(long id){
+        places.updateOne(
+                eq("id", id),
+                inc("queueSize", 1)
+        );
+    }
+
 
     /**
      * Location for some place
