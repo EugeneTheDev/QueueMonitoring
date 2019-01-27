@@ -37,7 +37,7 @@ $("document").ready(function () {
                 callback();
             },
             error: (err)=>console.log(err)
-        })
+        });
     
     }
     // gets additional information
