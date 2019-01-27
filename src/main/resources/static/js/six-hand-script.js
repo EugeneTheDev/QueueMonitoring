@@ -7,7 +7,7 @@ $("document").ready(function () {
     var renewPlaces = function(locations_list, coordinates, callback){
 
         $.ajax({
-            url: "http://localhost:5000/api/get/all",
+            url: "/api/get/all",
     
             method: "GET",
     
@@ -25,7 +25,7 @@ $("document").ready(function () {
                      + item.name + 
                      '</b> </h1> <p class="address">'
                      + item.address +
-                     '</p></div> <div class="icon-block"> <i class="fas fa-male fa-lg icon"></i><b>'
+                     '</p></div> <div class="icon-block"> <i class="fas fa-male fa-lg icon"></i><b class="query">'
                      + item.queueSize +
                      '</b> </div> </div> </div> </div>'});
                     
@@ -42,8 +42,27 @@ $("document").ready(function () {
     }
     // gets additional information
     var openPlace = function(place, coordinates){
+        // tells about newcomer
         $.ajax({
-            url: "http://localhost:5000/api/get/details",
+            url:"/api/update/user/come",
+            data: {
+                id: place.id
+            },
+            success: function(){
+                console.log("joined");
+                query = $("#" + place.id + " .query");
+                console.log(query);
+                query.text(() => 1+parseInt(query.text()));
+                console.log(query.text());
+            },
+            error: function(err){
+                console.log(err);
+            }
+        });
+
+        //returns 
+        $.ajax({
+            url: "/api/get/details",
             data: {
                 id: place.id,
                 lat: coordinates.lat,
@@ -71,22 +90,21 @@ $("document").ready(function () {
                 
                 // button listener
                 $("button").on("click", function(e){ 
-                   console.log(e);
                    e.stopPropagation(); 
                    var present_id = e.currentTarget.id.slice(2); 
-                   console.log("form" + " #" + present_id );
-                   var form = $("#" + present_id + " form:first");
+                   var form = $("#" + present_id + " form");
+                   var input = $("#" + present_id + " form" +" input")
                    form.show();
-                   const form_content = form.val();
-                   console.log(form_content);
-                   var present_button = $("#" + present_id + " .change");
+                   const form_content = input.val();
+                   var present_button = $("#" + present_id + " .change:first");
                    present_button.off("click");
+      
                    present_button.on("click",function(e){
                         e.preventDefault()
                         $.ajax({
-                            url: "http://localhost:5000/api/update/information",
+                            url: "/api/update/information",
                             data:{
-                                user_size:present_button.val(),
+                                user_size: form_content,
                                 id: present_id
                             },
                             success: function(data){
