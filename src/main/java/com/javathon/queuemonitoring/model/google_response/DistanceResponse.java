@@ -14,6 +14,7 @@ public class DistanceResponse {
 
             public Field distance;
             public Field duration;
+            public String status;
 
             public static class Field {
 

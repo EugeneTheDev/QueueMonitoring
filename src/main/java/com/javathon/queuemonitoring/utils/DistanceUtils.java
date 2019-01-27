@@ -48,10 +48,10 @@ public class DistanceUtils {
                 "&language=ru&mode=walking&key=" +
                 getToken();
         DistanceResponse response = template.getForObject(query, DistanceResponse.class);
-        if (response != null) {
+        if (response != null && response.rows.get(0).elements.get(0).status.equals("OK")) {
             return new Pair(response.rows.get(0).elements.get(0).duration.text, response.rows.get(0).elements.get(0).duration.value / 60);
         } else {
-            return null;
+            throw new IllegalStateException("Route not found");
         }
     }
 
