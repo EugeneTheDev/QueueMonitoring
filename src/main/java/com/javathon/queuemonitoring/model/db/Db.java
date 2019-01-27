@@ -22,7 +22,7 @@ public class Db {
     }
 
     /**
-     * @return all places
+     * @return all places nearby
      */
     public List<Document> getAllPlaces(double userLat, double userLon) {
         List<Document> placesList = places.find().into(new ArrayList<>());

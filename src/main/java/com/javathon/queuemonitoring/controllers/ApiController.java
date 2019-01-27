@@ -1,10 +1,7 @@
 package com.javathon.queuemonitoring.controllers;
 
-import com.javathon.queuemonitoring.controllers.responses.SuccessResponse;
-import com.javathon.queuemonitoring.controllers.responses.TimeResponse;
-import com.javathon.queuemonitoring.controllers.responses.UpdateResponse;
+import com.javathon.queuemonitoring.controllers.responses.*;
 import com.javathon.queuemonitoring.model.App;
-import com.javathon.queuemonitoring.controllers.responses.AllPlacesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,9 +54,13 @@ public class ApiController {
      * @param lon user longitude
      */
     @GetMapping("get/details")
-    public TimeResponse getDetails(@RequestParam(value = "id") int id,
+    public BaseResponse getDetails(@RequestParam(value = "id") int id,
                                    @RequestParam(value = "lat") double lat,
                                    @RequestParam(value = "lon") double lon){
-        return app.calculateTime(id, lat, lon);
+        try {
+            return app.getDetails(id, lat, lon);
+        } catch (IllegalStateException e) {
+            return new ErrorResponse(e.getMessage());
+        }
     }
 }
