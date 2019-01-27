@@ -29,12 +29,14 @@ public class Db {
         placesList.forEach(el -> el.remove("_id"));
 
         placesList.sort((o1, o2) -> {
-            double lat1 = o1.get("location", Document.class).getDouble("lat");
-            double lon1 = o1.get("location", Document.class).getDouble("lon");
+            Document location1 = o1.get("location", Document.class);
+            double lat1 = location1.getDouble("lat");
+            double lon1 = location1.getDouble("lon");
             double firstDistance = DistanceUtils.calculateStraightDistance(lat1, lon1, userLat, userLon);
 
-            double lat2 = o2.get("location", Document.class).getDouble("lat");
-            double lon2 = o2.get("location", Document.class).getDouble("lat");
+            Document location2 = o2.get("location", Document.class);
+            double lat2 = location2.getDouble("lat");
+            double lon2 = location2.getDouble("lat");
             double secondDistance = DistanceUtils.calculateStraightDistance(lat2, lon2, userLat, userLon);
 
             return new Double(firstDistance - secondDistance).intValue();
