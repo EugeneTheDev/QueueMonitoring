@@ -42,23 +42,6 @@ $("document").ready(function () {
     }
     // gets additional information
     var openPlace = function(place, coordinates){
-        // tells about newcomer
-        $.ajax({
-            url:"/api/update/user/come",
-            data: {
-                id: place.id
-            },
-            success: function(){
-                console.log("joined");
-                query = $("#" + place.id + " .query");
-                console.log(query);
-                query.text(() => 1+parseInt(query.text()));
-                console.log(query.text());
-            },
-            error: function(err){
-                console.log(err);
-            }
-        });
 
         //returns 
         $.ajax({
@@ -80,27 +63,47 @@ $("document").ready(function () {
                 place.additional = html;
                 place.total = place.html.slice(place.html.indexOf("row")-12) + place.additional;
                 to_be_changed = $("#"+place.id);
-                to_be_changed.html(place.total); 
+                to_be_changed.html(place.total);
+
                 // hide new forms
                 $("form").hide();
                 $("form").on("click", (e)=>{
                     e.stopPropagation();
                 });
-                
+
+
                 
                 // button listener
-                $("button").on("click", function(e){ 
+                $("button").on("click", function(e){
+                    // tells about newcomer
+                    $.ajax({
+                        url:"/api/update/user/come",
+                        data: {
+                            id: place.id
+                        },
+                        success: function(){
+                            console.log("joined");
+                            query = $("#" + place.id + " .query");
+                            console.log(query);
+                            query.text(() => 1+parseInt(query.text()));
+                            console.log(query.text());
+                        },
+                        error: function(err){
+                            console.log(err);
+                        }
+                    });
                    e.stopPropagation(); 
                    var present_id = e.currentTarget.id.slice(2); 
                    var form = $("#" + present_id + " form");
-                   var input = $("#" + present_id + " form" +" input")
+                   var input = $("#" + present_id + " form" +" input");
                    form.show();
-                   const form_content = input.val();
+
                    var present_button = $("#" + present_id + " .change:first");
                    present_button.off("click");
       
                    present_button.on("click",function(e){
-                        e.preventDefault()
+                        const form_content = input.val();
+                        e.preventDefault();
                         $.ajax({
                             url: "/api/update/information",
                             data:{
