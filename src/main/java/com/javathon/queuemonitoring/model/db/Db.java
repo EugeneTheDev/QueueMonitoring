@@ -2,13 +2,11 @@ package com.javathon.queuemonitoring.model.db;
 
 
 
+import com.javathon.queuemonitoring.utils.DistanceUtils;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Updates.*;
@@ -26,9 +24,21 @@ public class Db {
     /**
      * @return all places
      */
-    public List<Document> getAllPlaces(){
+    public List<Document> getAllPlaces(double userLat, double userLon) {
         List<Document> placesList = places.find().into(new ArrayList<>());
         placesList.forEach(el -> el.remove("_id"));
+
+        placesList.sort((o1, o2) -> {
+            double lat1 = o1.get("location", Document.class).getDouble("lat");
+            double lon1 = o1.get("location", Document.class).getDouble("lon");
+            double firstDistance = DistanceUtils.calculateStraightDistance(lat1, lon1, userLat, userLon);
+
+            double lat2 = o2.get("location", Document.class).getDouble("lat");
+            double lon2 = o2.get("location", Document.class).getDouble("lat");
+            double secondDistance = DistanceUtils.calculateStraightDistance(lat2, lon2, userLat, userLon);
+
+            return new Double(firstDistance - secondDistance).intValue();
+        });
         return placesList;
     }
 

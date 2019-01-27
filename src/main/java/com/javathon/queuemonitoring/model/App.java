@@ -53,8 +53,8 @@ public class App {
     /**
      * @return all places from db
      */
-    public AllPlacesResponse getAllPlaces(){
-        return new AllPlacesResponse(db.getAllPlaces());
+    public AllPlacesResponse getAllPlaces(double lat, double lon) {
+        return new AllPlacesResponse(db.getAllPlaces(lat, lon));
     }
 
     /**
