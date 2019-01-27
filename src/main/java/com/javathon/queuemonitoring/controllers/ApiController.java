@@ -24,8 +24,9 @@ public class ApiController {
     }
 
     @GetMapping("get/all")
-    public AllPlacesResponse getAllPlaces(){
-        return app.getAllPlaces();
+    public AllPlacesResponse getAllPlaces(@RequestParam(value = "lat") double lat,
+                                          @RequestParam(value = "lon") double lon){
+        return app.getAllPlaces(lat, lon);
     }
 
     @GetMapping("update/information")

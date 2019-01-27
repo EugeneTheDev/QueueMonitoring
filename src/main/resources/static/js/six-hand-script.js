@@ -1,15 +1,122 @@
+{/* <div class="row center-xs hidden-block"> <div class="btn-group"> <div class="container"> <div class="row center-xs middle-xs"> <div class="col-xs-12 col-md-3"> <div class="way-shower"> <p>На путь <i class="far fa-clock icon"></i> 23 min </p> </div> <div class="way-shower"> <p>Будет 40 <i class="fas fa-male fa-lg icon"></i> </p> </div> </div> <div class="col-xs-12 col-md-3"> <button class="right">Я на месте</button> </div> </div> </div> </div> </div> </div> </div>' */}
+
+var renewPlaces = function(locations_list, coordinates, callback){
+
+    $.ajax({
+        url: "http://localhost:5000/api/get/all",
+
+        method: "GET",
+
+        data: coordinates,
+
+        success: function(data){
+            var container = $(".block-list__content:first");
+            container.empty();
+            
+            // adding card basis
+            data.places.forEach(function(item){
+                locations_list.push({id:item.id, html:'<div class="container"> <div class="card" id="'
+                + item.id +
+                '"> <div class="row"> <div class="container"> <div class="center-xs row"> <div class="col-xs-12"> <h1> <b class="headline">'
+                 + item.name + 
+                 '</b> </h1> <p class="address">'
+                 + item.address +
+                 '</p></div> <div class="icon-block"> <i class="fas fa-male fa-lg icon"></i><b>23</b> </div> </div> </div> </div>'});
+                
+            });
+            locations_list.forEach(function(item){
+                container.append(item.html);
+            });
+            callback();
+        },
+        error: (err)=>console.log(err)
+    })
+
+}
+
+var openPlace = function(place, coordinates){
+    $.ajax({
+        url: "http://localhost:5000/api/get/details",
+        data: {
+            id: place.id,
+            lat: coordinates.lat,
+            lon: coordinates.lon
+        },
+        success:function(data){
+            let html = '<div class="row center-xs hidden-block"> <div class="btn-group"> <div class="container"> <div class="row center-xs middle-xs"> <div class="col-xs-12 col-md-3"> <div class="way-shower"> <p>На путь <i class="far fa-clock icon"></i>'
+            + data.time +
+            '</p> </div> <div class="way-shower"> <p>Будет '
+            + data.peopleInQueue + 
+            ' <i class="fas fa-male fa-lg icon"></i> </p> </div> </div> <div class="col-xs-12 col-md-3"> <button class="right">Я на месте</button> </div> </div> </div> </div> </div>'
+            place.additional = html;
+            place.total = place.html.slice(place.html.indexOf("row")-12) + place.additional;
+            to_be_changed = $("#"+place.id);
+            to_be_changed.html(place.total); 
+        }
+    });
+}
+
 $("document").ready(function () {
+    var places = [];
+    var geolocation_coords;
+
+    navigator.geolocation.getCurrentPosition((data)=>{
+
+        geolocation_coords = {
+        lat: data.coords["latitude"],
+        lon: data.coords["longitude"]
+        };
+        // initialising cards
+        // TODO: strange result in design
+
+        renewPlaces(places, geolocation_coords, callback=function(){
+
+            $(".card").on("click",function (e){
+                var present_id = e.currentTarget.id;
+                openPlace(places.filter(function(item){
+                    return item.id == present_id;
+                })[0]
+                , geolocation_coords);
+                // $(".card").off("click");
+                $(".card").on("click", function (e) {
+                    let present_id = e.currentTarget.id;
+                    $("#" + present_id + " .hidden-block").fadeToggle();
+                });
+            });
+                
+        });
+    });
+    
+
     var lastPosition = 0;
-
+    
+    // hiding and opening card
     $(".hidden-block").hide();
-    $(".card").on("click", function (e) {
-        let present_id = e.currentTarget.id;
-        $("#" + present_id + " .hidden-block").fadeToggle();
-        console.log($("#" + present_id + ".hidden-block"));
 
-        // $(".hidden-block").fadeIn();
+    
+    $("button").on("click", function(e){
+       e.stopPropagation(); 
     });
 
+
+    // getting additional information about exact card
+    $(".card").on("click",function (e){
+        var present_id = e.currentTarget.id;
+        openPlace(places.filter(function(item){
+            return item[0] == present_id;
+        })[0], geolocation_coords);
+        $(".card").off("click");
+        $(".card").on("click", function (e) {
+            let present_id = e.currentTarget.id;
+            $("#" + present_id + " .hidden-block").fadeToggle();
+        });
+    });
+    
+
+    
+
+    // header hiding
+    
     $(window).scroll((e) => {
         var newPosition = $(this).scrollTop();
         if (newPosition - lastPosition > 0) {
@@ -23,182 +130,6 @@ $("document").ready(function () {
         }
         lastPosition = newPosition;
     })
+
 });
 
-
-
-// $("document").ready(function(){
-//     $(".notification").hide();
-//     $(".notification-server").hide();
-//     $(".notification-server-success").hide();    
-
-//     // used for the searcher form
-//     function relationInserter(data){
-//         var source = data.source, target = data.target;
-//         // integrating block
-//         var relation_element = '<div class="row center-xs relation-block-row"><div class="col-xs-10"><div class="relation-connection"><div class="first-user-name-block"><p>' + source.firstName + ' ' +source.lastName + '</p></div><div class="handshake-view"><div><p class="relations-number">' + data.count + '<p></div><div class="shaking-img"></div></div><div class="second-user-name-block"><p>' + target.firstName + ' ' + target.lastName + '</p></div></div></div></div>';
-//         var x = document.createElement('div');
-//         //animation creating with before - defining the element 
-//         x.innerHTML = relation_element;
-//         $(".relation-block").append(x);
-//         $(x).hide().fadeIn({duration:500});
-//     }
-
-
-//     function searchValidator(){
-//         if (/http\w*:\/\/vk.com\/\w+/.test($("input")[4].value)){
-//             $(".notification").fadeOut({duration:500});
-//             $.ajax({
-//                 url: "api/results/get",
-//                 method: "GET",
-//                 data:{
-//                     user_id: $("input")[4].value.slice(15)
-//                 },
-//                 success: function(data){
-//                             if (data.success){
-//                                 $(".notification-search-error").fadeOut({duration:1000});
-//                                 $(".relation-block-row").remove();
-//                                 var arrayOfRelations = data.result.sort(function(a,b){
-//                                     return b.count-a.count;
-//                                 })
-
-//                                 for (var i=0; i<data.result.length;i++){
-//                                     relationInserter(arrayOfRelations[i]);
-//                                 }
-
-//                             }else{
-//                                 $(".notification-search-error").fadeIn({duration:1000});
-//                                 $("#search-error").text(data.message);
-//                             } 
-
-//                         }
-//                 ,
-//                 error: function(){
-//                     alert("Try to reload the page");
-//                 }
-
-//             });
-//         }else{
-//             $(".notification").fadeIn({duration:500});
-//         }
-//     $("input")[4].value = "";
-// }
-
-
-//     function requestValidator(){
-//         if (window.innerWidth<=720){
-//             if (/http\w*:\/\/vk.com\/\w+/.test($(".first-input")[1].value) && /http\w*:\/\/vk.com\/\w+/.test($(".second-input")[1].value)){
-//                 $(".notification").fadeOut({duration:500});
-//                 $(".notification-server").fadeOut({duration:500})
-
-//                 $.ajax({
-//                     url: "api/users/insert",
-//                     method: "GET",
-//                     data:{
-//                         source: $(".first-input")[1].value.slice(15),
-//                         target: $(".second-input")[1].value.slice(15)
-//                     },
-//                     success: function(data){
-
-//                         $(".notification-server-error").fadeOut({duration:1000});
-
-//                         if (data.success){
-//                             $(".notification-server-success").fadeIn({duration:1000}); 
-//                             setTimeout(function(){
-//                                 $(".notification-server-success").fadeOut({duration:1000});
-//                                 }, 5000);                       
-//                             $(".first-input")[1].value = "";
-//                             $(".second-input")[1].value = "";
-//                         }else{
-//                             $(".notification-server-error").fadeIn({duration:1000});
-//                             $("#server-error-mobile").text(data.message);
-//                         }
-
-//                         $(".first-input")[1].value = "";
-//                         $(".second-input")[1].value = "";
-//                         }
-//                     ,
-//                     error: function(){
-//                         alert("error, reload the page");
-//                         $(".first-input")[0].value = "";
-//                         $(".second-input")[0].value = "";
-
-//                     }
-
-//             });}else{
-//                 alert("try to reload the page, there is an error");
-//             }
-//         }else{
-//             if (/http\w*:\/\/vk.com\/\w+/.test($(".first-input")[0].value) && /http\w*:\/\/vk.com\/\w+/.test($(".second-input")[0].value)){
-//             $(".notification").fadeOut({duration:500});
-//             $(".notification-server").fadeOut({duration:500})
-
-//             $.ajax({
-//                 url: "api/users/insert",
-//                 method: "GET",
-//                 data:{
-//                     source: $(".first-input")[0].value.slice(15),
-//                     target: $(".second-input")[0].value.slice(15)
-//                 },
-//                 success: function(data){
-
-//                         $(".notification-server-error").fadeOut({duration:1000});
-
-//                         if (data.success){
-//                             $(".notification-server-success").fadeIn({duration:1000});
-//                             setTimeout(function(){
-//                                 $(".notification-server-success").fadeOut({duration:1000});
-//                                 }, 5000);                       
-//                             $(".first-input")[0].value = "";
-//                             $(".second-input")[0].value = "";
-//                         }else{
-//                             $(".notification-server-error").fadeIn({duration:1000});
-//                             $("#server-error").text(data.message);
-//                         }
-
-//                         $(".first-input")[0].value = "";
-//                         $(".second-input")[0].value = "";
-//                     }
-//                 ,
-//                 error: function(){
-//                     $(".notification-server-error").fadeIn({duration:1000});
-//                     $(".first-input")[0].value = "";
-//                     $(".second-input")[0].value = "";
-
-//                 }
-
-//             });}else{
-//                 alert("try to reload the page, there is an error");
-//             }
-//         }
-//     }
-
-
-//     function updateRightNowInformation(){
-//         $.ajax({
-//                 url: "api/update",
-//                 method: "GET",
-//                 success: function(data){
-//                     $("#queue").html(data.queue);
-//                     $("#queue-mobile").html(data.queue);
-//                     $("#processed").html(data.processed);
-//                     $("#processed-mobile").html(data.processed);
-//                     $("#average").html(data.average);
-//                     $("#average-mobile").html(data.average);
-
-//                 },
-//                 error: function(){
-//                     console.log("error with updating");
-//                 }
-
-//             });
-//     }
-
-//     $("#search-button").on("click", searchValidator);
-//     $("#digest-button").on("click", requestValidator);
-//     $("#digest-button-mobile").on("click", requestValidator);
-//     updateRightNowInformation();
-//     setInterval(updateRightNowInformation, 10000);
-
-
-// });
