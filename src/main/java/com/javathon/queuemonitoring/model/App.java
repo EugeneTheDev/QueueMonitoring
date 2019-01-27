@@ -2,9 +2,11 @@ package com.javathon.queuemonitoring.model;
 
 import com.javathon.queuemonitoring.controllers.responses.SuccessResponse;
 import com.javathon.queuemonitoring.controllers.responses.TimeResponse;
+import com.javathon.queuemonitoring.controllers.responses.UpdateResponse;
 import com.javathon.queuemonitoring.model.db.Db;
 import com.javathon.queuemonitoring.controllers.responses.AllPlacesResponse;
 import com.javathon.queuemonitoring.utils.DistanceUtils;
+import com.javathon.queuemonitoring.utils.Pair;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import org.bson.Document;
@@ -51,8 +53,8 @@ public class App {
     /**
      * @return all places from db
      */
-    public AllPlacesResponse getAllPlaces(){
-        return new AllPlacesResponse(db.getAllPlaces());
+    public AllPlacesResponse getAllPlaces(double lat, double lon) {
+        return new AllPlacesResponse(db.getAllPlaces(lat, lon));
     }
 
     /**
@@ -61,23 +63,25 @@ public class App {
      * @param userSize new userSize of peoples in queue
      * @return success response
      */
-    public SuccessResponse updateInformation(long id, int userSize){
-        db.updateInformation(id, userSize);
-        return new SuccessResponse();
+    public UpdateResponse updateInformation(long id, int userSize){
+        return new UpdateResponse(db.updateInformation(id, userSize));
     }
 
     /**
-     * Calculate time to go for some place
+     * Calculate time to go and predict queue size for some place
      * @param id place id
      * @param lat user latitude
      * @param lon user longitude
-     * @return time to go
+     * @return time to go and predicted queue size
      */
     public TimeResponse calculateTime(long id, double lat, double lon){
-        Document location = db.getLocation(id);
-        String time = DistanceUtils.calculateTimeToGo(lat, lon, location.getDouble("lat"),
-                location.getDouble("lon")).getFirst();
-        return new TimeResponse(time);
+        Document place = db.getPlace(id);
+        Document location = place.get("location", Document.class);
+        Pair<String, Integer> time = DistanceUtils.calculateTimeToGo(lat, lon, location.getDouble("lat"),
+                location.getDouble("lon"));
+        int peopleInQueue = (int)(place.getInteger("queueSize") + time.getSecond()*place.getDouble("speed"));
+        peopleInQueue = peopleInQueue > 0 ? peopleInQueue : 0;
+        return new TimeResponse(time.getFirst(), peopleInQueue);
     }
 
     public SuccessResponse updateUserCome(long id){

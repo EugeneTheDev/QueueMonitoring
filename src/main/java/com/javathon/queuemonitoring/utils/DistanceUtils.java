@@ -49,7 +49,7 @@ public class DistanceUtils {
                 getToken();
         DistanceResponse response = template.getForObject(query, DistanceResponse.class);
         if (response != null) {
-            return new Pair(response.rows.get(0).elements.get(0).duration.text, response.rows.get(0).elements.get(0).duration.value);
+            return new Pair(response.rows.get(0).elements.get(0).duration.text, response.rows.get(0).elements.get(0).duration.value / 60);
         } else {
             return null;
         }

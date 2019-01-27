@@ -2,13 +2,11 @@ package com.javathon.queuemonitoring.model.db;
 
 
 
+import com.javathon.queuemonitoring.utils.DistanceUtils;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Updates.*;
@@ -26,16 +24,30 @@ public class Db {
     /**
      * @return all places
      */
-    public List<Document> getAllPlaces(){
+    public List<Document> getAllPlaces(double userLat, double userLon) {
         List<Document> placesList = places.find().into(new ArrayList<>());
         placesList.forEach(el -> el.remove("_id"));
+
+        placesList.sort((o1, o2) -> {
+            Document location1 = o1.get("location", Document.class);
+            double lat1 = location1.getDouble("lat");
+            double lon1 = location1.getDouble("lon");
+            double firstDistance = DistanceUtils.calculateStraightDistance(lat1, lon1, userLat, userLon);
+
+            Document location2 = o2.get("location", Document.class);
+            double lat2 = location2.getDouble("lat");
+            double lon2 = location2.getDouble("lat");
+            double secondDistance = DistanceUtils.calculateStraightDistance(lat2, lon2, userLat, userLon);
+
+            return new Double(firstDistance - secondDistance).intValue();
+        });
         return placesList;
     }
 
     /**
      * @see com.javathon.queuemonitoring.model.App#updateInformation(long, int)
      */
-    public void updateInformation(long id, int userSize){
+    public int updateInformation(long id, int userSize){
         Document doc = places.find(eq("id", id)).first();
 
         int currentSize = doc.getInteger("queueSize");
@@ -56,6 +68,7 @@ public class Db {
 
         );
 
+        return newSize;
     }
 
     /**
@@ -71,12 +84,12 @@ public class Db {
 
 
     /**
-     * Location for some place
+     * Place json object
      * @param id place id
      * @return json object with "lat" and "lon" fields
      */
-    public Document getLocation(long id){
-        return places.find(eq("id", id)).first().get("location", Document.class);
+    public Document getPlace(long id){
+        return places.find(eq("id", id)).first();
     }
 
 

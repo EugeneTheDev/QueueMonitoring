@@ -45,12 +45,18 @@ header .header-text{
 }
 
 .opening-tags-block{
-    border:2px solid rgba(41, 41, 41, 0.7);
+    border:2px solid rgba(223, 219, 219, 0.623);
     border-radius: 5px;
+<<<<<<< HEAD
     background: rgb(255, 255, 255);
     
     box-shadow: 2px 2px 2px rgba(0,0,0,0.6);
+=======
+    background: none;
+    box-shadow: 2px 2px 2px rgba(119, 113, 113, 0.6);
+>>>>>>> ea11e376b46df11e6ebe761c943cdd1b92e0e7ce
     margin: 9px;
+    background-color: rgba(178, 184, 178, 0.432);
 }
 
 .opening-tags-block__text{
