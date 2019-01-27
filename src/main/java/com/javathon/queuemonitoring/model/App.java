@@ -74,7 +74,7 @@ public class App {
      * @param lon user longitude
      * @return time to go and predicted queue size
      */
-    public TimeResponse calculateTime(long id, double lat, double lon){
+    public TimeResponse getDetails(long id, double lat, double lon) throws IllegalStateException{
         Document place = db.getPlace(id);
         Document location = place.get("location", Document.class);
         Pair<String, Integer> time = DistanceUtils.calculateTimeToGo(lat, lon, location.getDouble("lat"),
