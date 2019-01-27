@@ -7,7 +7,7 @@ $("document").ready(function () {
     var renewPlaces = function(locations_list, coordinates, callback){
 
         $.ajax({
-            url: "http://localhost:5000/api/get/all",
+            url: "/api/get/all",
     
             method: "GET",
     
@@ -37,13 +37,13 @@ $("document").ready(function () {
                 callback();
             },
             error: (err)=>console.log(err)
-        })
+        });
     
     }
     // gets additional information
     var openPlace = function(place, coordinates){
         $.ajax({
-            url: "http://localhost:5000/api/get/details",
+            url: "/api/get/details",
             data: {
                 id: place.id,
                 lat: coordinates.lat,
@@ -84,7 +84,7 @@ $("document").ready(function () {
                    present_button.on("click",function(e){
                         e.preventDefault()
                         $.ajax({
-                            url: "http://localhost:5000/api/update/information",
+                            url: "/api/update/information",
                             data:{
                                 user_size:present_button.val(),
                                 id: present_id
