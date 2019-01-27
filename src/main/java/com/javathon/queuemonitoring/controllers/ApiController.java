@@ -20,12 +20,22 @@ public class ApiController {
         this.app = app;
     }
 
+    /**
+     * Returns list of places nearby
+     * @param lat user latitude
+     * @param lon user longitude
+     */
     @GetMapping("get/all")
     public AllPlacesResponse getAllPlaces(@RequestParam(value = "lat") double lat,
                                           @RequestParam(value = "lon") double lon){
         return app.getAllPlaces(lat, lon);
     }
 
+    /**
+     * Update queue information for some place
+     * @param id place id
+     * @param userSize new userSize of peoples in queue
+     */
     @GetMapping("update/information")
     public UpdateResponse updateInformation(@RequestParam(value = "id") long id,
                                             @RequestParam(value = "user_size") int userSize){
@@ -37,6 +47,12 @@ public class ApiController {
         return app.updateUserCome(id);
     }
 
+    /**
+     * Calculate time to go and predict queue size for some place
+     * @param id place id
+     * @param lat user latitude
+     * @param lon user longitude
+     */
     @GetMapping("get/details")
     public BaseResponse getDetails(@RequestParam(value = "id") int id,
                                    @RequestParam(value = "lat") double lat,
