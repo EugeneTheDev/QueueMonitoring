@@ -47,13 +47,14 @@ header .header-text{
 .opening-tags-block{
     border:2px solid rgba(41, 41, 41, 0.7);
     border-radius: 5px;
-    background: none;
+    background: rgb(255, 255, 255);
+    
     box-shadow: 2px 2px 2px rgba(0,0,0,0.6);
     margin: 9px;
 }
 
 .opening-tags-block__text{
-    color: rgb(41, 41, 41);
+    color: rgba(41, 41, 41, 0.7);
     font-family: "Montserrat", sans-serif;
     font-size: 20px;
     font-weight: 400;
@@ -63,5 +64,8 @@ header .header-text{
 
 .block-list{
     margin-top: 120px;
+}
 
+.content+.block-list__content{
+    padding: 0px;
 }
